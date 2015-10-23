@@ -5,11 +5,11 @@ module HawtioForms {
     var listeners = {};
     function addSchemaInternal(name: string, schema: any):void {
       schemaMap[name] = schema;
-      _.forIn(listeners, (listener, id) => {
+      _.forIn(listeners, (listener) => {
         listener(name, schema);
       });
     }
-    function getTypeConfig(type:string) {
+    function getTypeConfig(type:string): Object {
       if (mappings.getMapping(type) === type) {
         return {
           type: 'object',
@@ -38,7 +38,7 @@ module HawtioForms {
       },
       addSchema: (name: string, schema: any):void => {
         var schemaClone = _.cloneDeep(schema);
-        _.forIn(schemaClone.properties, (property, id) => {
+        _.forIn(schemaClone.properties, (property: any) => {
           if (_.startsWith(property.javaType, 'java.util.Map')) {
             var trimmed = property.javaType.replace('java.util.Map<', '').replace('>', '');
             var parts = trimmed.split(',');
